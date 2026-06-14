@@ -1,0 +1,28 @@
+const userProfileSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+    unique: true
+  },
+  bio: String,
+  avatar: String, // URL to image
+  interests: [String],
+  location: String,
+  personalityResult: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PersonalityResult'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+
+const UserProfile = mongoose.model('UserProfile', userProfileSchema);
+export default  UserProfile;
