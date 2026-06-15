@@ -51,3 +51,54 @@ export const registerUser = async(req, res)=>{
     }
 }
 
+export const loginUser = async(req, res)=>{
+    const {email, password} = req.body;
+    try{
+        const user = await User.findOne({email});
+        if(!user) return res.status(400).json({message: "Invalid email or password"});
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if(!isPasswordValid) return res.status(400).json({message: "Invalid email or password"});
+
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "100h"});
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 100 * 60 * 60 * 1000,//100 hours in milliseconds,
+            //it won't expire until browser data is cleared,
+
+        });
+        return res.status(200).json({message: "User logged in successfully",
+            user,
+            token,
+
+        });
+    }catch{
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
+export const logoutUser = async(req, res)=>{
+    try{
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+        });
+        return res.status(200).json({message: "User logged out successfully"});
+    }catch{
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
+
+export const getUserProfile = async(req, res)=>{
+    try{}catch{}
+}
+
+export const updateUserProfile = async(req, res)=>{
+    try{}catch{}
+}
+
