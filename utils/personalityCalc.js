@@ -5,72 +5,7 @@ import questions from '../data/questions.json' with { type: 'json' };
  * 
  * @param {Object} answers - Object mapping question ID (e.g., "q1") to Likert response (1 to 5).
  * @returns {Object} Calculated scores and insights.
- */
-export function calculatePersonality(answers) {
-  // Initialize scores structure
-  const traits = {
-    O: { sum: 0, count: 0 },
-    C: { sum: 0, count: 0 },
-    E: { sum: 0, count: 0 },
-    A: { sum: 0, count: 0 },
-    N: { sum: 0, count: 0 }
-  };
-
-  // Loop through questions to compute sums and counts
-  questions.forEach(q => {
-    const answer = answers[q.id];
-    // Only count questions that have been answered (answers should be 1, 2, 3, 4, or 5)
-    if (answer !== undefined && answer !== null && answer >= 1 && answer <= 5) {
-      const keyedScore = q.direction === 1 ? answer : (6 - answer);
-      traits[q.trait].sum += keyedScore;
-      traits[q.trait].count += 1;
-    }
-  });
-
-  // Calculate percentage scores (0 to 100) using Min-Max normalization
-  const scores = {};
-  Object.keys(traits).forEach(trait => {
-    const { sum, count } = traits[trait];
-    if (count > 0) {
-      const minPossible = count * 1;
-      const maxPossible = count * 5;
-      scores[trait] = Math.round(((sum - minPossible) / (maxPossible - minPossible)) * 100);
-    } else {
-      scores[trait] = 0; // Default to 0 if no questions answered for this trait
-    }
-  });
-
-  // Generate textual categories and descriptions
-  const traitDetails = {};
-  Object.keys(scores).forEach(trait => {
-    const score = scores[trait];
-    let level = 'Medium';
-    if (score >= 70) {
-      level = 'High';
-    } else if (score < 40) {
-      level = 'Low';
-    }
-    
-    traitDetails[trait] = {
-      score,
-      level,
-      label: TRAIT_INFO[trait].label,
-      description: TRAIT_INFO[trait].levels[level],
-      bullets: TRAIT_INFO[trait].bullets[level]
-    };
-  });
-
-  // Determine composite archetype based on key trait interactions
-  const archetype = getArchetype(scores);
-
-  return {
-    scores,
-    traitDetails,
-    archetype
-  };
-}
-
-// Static Trait Information (Text descriptions matching professional minimalism)
+ */  
 export const TRAIT_INFO = {
   O: {
     label: "Openness to Experience",
@@ -139,6 +74,81 @@ export const TRAIT_INFO = {
   }
 };
 
+
+
+
+
+
+
+
+
+export function calculatePersonality(answers) {
+  // Initialize scores structure
+  const traits = {
+    O: { sum: 0, count: 0 },
+    C: { sum: 0, count: 0 },
+    E: { sum: 0, count: 0 },
+    A: { sum: 0, count: 0 },
+    N: { sum: 0, count: 0 }
+  };
+
+  // Loop through questions to compute sums and counts
+  questions.forEach(q => {
+    const answer = answers[q.id];
+
+    // Only count questions that have been answered (answers should be 1, 2, 3, 4, or 5)
+    if (answer !== undefined && answer !== null && answer >= 1 && answer <= 5) {
+      const keyedScore = q.direction === 1 ? answer : (6 - answer);
+      traits[q.trait].sum += keyedScore;
+      traits[q.trait].count += 1;
+    }
+  });
+
+  // Calculate percentage scores (0 to 100) using Min-Max normalization
+  const scores = {};
+  Object.keys(traits).forEach(trait => {
+    const { sum, count } = traits[trait];
+    if (count > 0) {
+      const minPossible = count * 1;
+      const maxPossible = count * 5;
+      scores[trait] = Math.round(((sum - minPossible) / (maxPossible - minPossible)) * 100);
+    } else {
+      scores[trait] = 0; // Default to 0 if no questions answered for this trait
+    }
+  });
+
+  // Generate textual categories and descriptions
+  const traitDetails = {};
+  Object.keys(scores).forEach(trait => {
+    const score = scores[trait];
+    let level = 'Medium';
+    if (score >= 70) {
+      level = 'High';
+    } else if (score < 40) {
+      level = 'Low';
+    }
+    
+    traitDetails[trait] = {
+      score,
+      level,
+      label: TRAIT_INFO[trait].label,
+      description: TRAIT_INFO[trait].levels[level],
+      bullets: TRAIT_INFO[trait].bullets[level]
+    };
+  });
+
+  // Determine composite archetype based on key trait interactions
+  const archetype = getArchetype(scores);
+
+  return {
+    scores,
+    traitDetails,
+    archetype
+  };
+}
+
+// Static Trait Information (Text descriptions matching professional minimalism)
+
 /**
  * Computes composite archetype based on key trait interactions.
  */
@@ -168,7 +178,9 @@ function getArchetype(scores) {
     return {
       title: "The Harmonizer",
       description: "You are warm, social, and naturally group-oriented. People trust you because of your genuine empathy and collaborative approach, making you a natural bridge-builder.",
+
       strengths: ["Relationship building", "Consensus gathering", "Active listening"],
+
       blindspots: ["Avoiding crucial conflicts", "People-pleasing tendencies", "Sustained social exhaustion"]
     };
   }
@@ -241,3 +253,58 @@ function getArchetype(scores) {
       }
   }
 }
+
+
+
+ export const demoAnswers = {
+  "q1": 4,
+  "q2": 5,
+  "q3": 2,
+  "q4": 3,
+  "q5": 4,
+  "q6": 5,
+  "q7": 1,
+  "q8": 4,
+  "q9": 3,
+  "q10": 5,
+  "q11": 2,
+  "q12": 4,
+  "q13": 5,
+  "q14": 3,
+  "q15": 4,
+  "q16": 2,
+  "q17": 5,
+  "q18": 4,
+  "q19": 3,
+  "q20": 5,
+  "q21": 2,
+  "q22": 4,
+  "q23": 1,
+  "q24": 5,
+  "q25": 3,
+  "q26": 4,
+  "q27": 2,
+  "q28": 5,
+  "q29": 4,
+  "q30": 3,
+  "q31": 5,
+  "q32": 2,
+  "q33": 4,
+  "q34": 1,
+  "q35": 5,
+  "q36": 3,
+  "q37": 4,
+  "q38": 2,
+  "q39": 5,
+  "q40": 4,
+  "q41": 3,
+  "q42": 5,
+  "q43": 1,
+  "q44": 4,
+  "q45": 2,
+  "q46": 5,
+  "q47": 3,
+  "q48": 4,
+  "q49": 2,
+  "q50": 5
+};

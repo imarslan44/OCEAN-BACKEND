@@ -1,14 +1,9 @@
 import mongoose from "mongoose";
 
-const testHistorySchema = new mongoose.Schema({
+const testSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
-  },
-  testId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Test',
     required: true
   },
   attemptNumber: {
@@ -16,8 +11,11 @@ const testHistorySchema = new mongoose.Schema({
     default: 1
   },
   personalityResult: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'PersonalityResult'
+       O : Number,
+       C : Number,
+       E : Number,
+       A : Number,
+       N : Number 
   },
   status: {
     type: String,
@@ -33,7 +31,21 @@ const testHistorySchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  testType: {
+    type: String,
+    enum: ['short', 'full'],
+    default: 'short'
+  },
+  testData: [
+    {
+      questionId: String,
+      questionText: String,
+      answer: Number
+    }
+  ]
+
 });
 
-module.exports = mongoose.model('TestHistory', testHistorySchema);
+const TestModel = mongoose.model('Test', testSchema);
+export default TestModel;

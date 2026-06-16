@@ -4,6 +4,9 @@ import bodyParser from 'body-parser';
 import { PORT } from './config/env.config.js';
 import { connectDB } from './config/db.config.js';
 import userRouter from './routes/user.routes.js';
+import resultRouter from './routes/relusts.routes.js';
+
+
 connectDB();
 
 
@@ -13,11 +16,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/api/v1/users", userRouter);
+app.use('/api/v1/results', resultRouter)
 
 
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
+
 
 
 
