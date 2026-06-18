@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
 
   testHistory: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'TestHistory'
+    ref: 'Test'
   }],
   
   preferences: {

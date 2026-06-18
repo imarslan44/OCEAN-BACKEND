@@ -1,5 +1,4 @@
 import PersonalityResult  from "../models/results.model.js";
-import {saveTest} from "../middlewares/testResult.middleware.js"
 import { calculatePersonality } from "../utils/personalityCalc.js";
 import { demoAnswers } from "../utils/personalityCalc.js";
 

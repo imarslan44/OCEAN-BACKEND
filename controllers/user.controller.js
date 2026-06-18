@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import UserProfile from "../models/profile.schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -9,8 +10,9 @@ export const registerUser = async(req, res)=>{
         const isEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
         if(!isEmail) return res.status(400).json({message: "Invalid email format"});
         
-        const isPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(password) || password.length < 6;
-        if(!isPassword ) return res.status(400).json({message: "Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character"});
+        const isPassword = password.length >= 6;
+
+        if(!isPassword) return res.status(400).json({message: "Password must be at least 6 characters long"});
 
     
         const isUsername = username.length < 3 || username.length > 20;
@@ -94,11 +96,77 @@ export const logoutUser = async(req, res)=>{
 }
 
 
-export const getUserProfile = async(req, res)=>{
-    try{}catch{}
-}
+export const getUserProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate({
+        path: "profile",
+        populate: {
+          path: "personalityResult"
+        }
+      });
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-export const updateUserProfile = async(req, res)=>{
-    try{}catch{}
-}
+export const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { bio, avatar, interests, location, ageRange, goals } = req.body;
+
+    let userProfile = await UserProfile.findOne({ userId });
+    if (!userProfile) {
+      userProfile = await UserProfile.create({
+        userId,
+        bio,
+        avatar,
+        interests,
+        location,
+        ageRange,
+        goals
+      });
+      // Link to User
+      const user = await User.findById(userId);
+      user.profile = userProfile._id;
+      await user.save();
+    } else {
+      userProfile.bio = bio !== undefined ? bio : userProfile.bio;
+      userProfile.avatar = avatar !== undefined ? avatar : userProfile.avatar;
+      userProfile.interests = interests !== undefined ? interests : userProfile.interests;
+      userProfile.location = location !== undefined ? location : userProfile.location;
+      userProfile.ageRange = ageRange !== undefined ? ageRange : userProfile.ageRange;
+      userProfile.goals = goals !== undefined ? goals : userProfile.goals;
+      userProfile.updatedAt = Date.now();
+      await userProfile.save();
+    }
+
+    // Return populated user
+    const updatedUser = await User.findById(userId)
+      .select("-password")
+      .populate({
+        path: "profile",
+        populate: {
+          path: "personalityResult"
+        }
+      });
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedUser
+    });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 

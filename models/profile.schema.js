@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const userProfileSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -9,6 +11,8 @@ const userProfileSchema = new mongoose.Schema({
   avatar: String, // URL to image
   interests: [String],
   location: String,
+  ageRange: String,
+  goals: [String],
   personalityResult: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'PersonalityResult'
