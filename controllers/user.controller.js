@@ -4,22 +4,22 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async(req, res)=>{
-   const {email, password, username} = req.body
-    try{
-        //validate email
-        const isEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-        if(!isEmail) return res.status(400).json({message: "Invalid email format"});
-        
-        const isPassword = password.length >= 6;
+    const {email, password, username} = req.body
+     try{
+         //validate email
+         const isEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+         if(!isEmail) return res.status(400).json({message: "Invalid email format"});
+         
+         const isPassword = password.length >= 6;
 
-        if(!isPassword) return res.status(400).json({message: "Password must be at least 6 characters long"});
+         if(!isPassword) return res.status(400).json({message: "Password must be at least 6 characters long"});
 
-    
-        const isUsername = username.length < 3 || username.length > 20;
-        if(isUsername) return res.status(400).json({message: "Username must be between 3 and 20 characters long"});
-       
-    
-        const existingUser = await User.findOne({email});
+         if (username) {
+           const isUsername = username.length < 3 || username.length > 20;
+           if(isUsername) return res.status(400).json({message: "Username must be between 3 and 20 characters long"});
+         }
+     
+         const existingUser = await User.findOne({email});
 
         if(existingUser)  return res.status(400).json({message: "Email already exists"});
         
@@ -28,7 +28,7 @@ export const registerUser = async(req, res)=>{
         const newUser = await User.create({
             email,
             password: hashedPassword,
-            username
+            username: username || ''
         });
        
         const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {expiresIn: "100h"});
@@ -122,7 +122,11 @@ export const getUserProfile = async (req, res) => {
 export const updateUserProfile = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { bio, avatar, interests, location, ageRange, goals } = req.body;
+    const { bio, avatar, interests, location, ageRange, goals, isPublic, username, country, onboardingComplete, profileSetupComplete } = req.body;
+
+    if (username !== undefined) {
+      await User.findByIdAndUpdate(userId, { username }, { new: true });
+    }
 
     let userProfile = await UserProfile.findOne({ userId });
     if (!userProfile) {
@@ -133,7 +137,11 @@ export const updateUserProfile = async (req, res) => {
         interests,
         location,
         ageRange,
-        goals
+        goals,
+        isPublic,
+        country,
+        onboardingComplete,
+        profileSetupComplete
       });
       // Link to User
       const user = await User.findById(userId);
@@ -146,6 +154,10 @@ export const updateUserProfile = async (req, res) => {
       userProfile.location = location !== undefined ? location : userProfile.location;
       userProfile.ageRange = ageRange !== undefined ? ageRange : userProfile.ageRange;
       userProfile.goals = goals !== undefined ? goals : userProfile.goals;
+      userProfile.isPublic = isPublic !== undefined ? isPublic : userProfile.isPublic;
+      if (country !== undefined) userProfile.country = country;
+      if (onboardingComplete !== undefined) userProfile.onboardingComplete = onboardingComplete;
+      if (profileSetupComplete !== undefined) userProfile.profileSetupComplete = profileSetupComplete;
       userProfile.updatedAt = Date.now();
       await userProfile.save();
     }

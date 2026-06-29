@@ -11,8 +11,21 @@ const userProfileSchema = new mongoose.Schema({
   avatar: String, // URL to image
   interests: [String],
   location: String,
+  country: String,
   ageRange: String,
   goals: [String],
+  profileSetupComplete: {
+    type: Boolean,
+    default: false
+  },
+  onboardingComplete: {
+    type: Boolean,
+    default: false
+  },
+  isPublic: {
+    type: Boolean,
+    default: true
+  },
   personalityResult: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'PersonalityResult'

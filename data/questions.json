@@ -1,355 +1,354 @@
+
 [
   {
     "id": "q1",
-    "text": "I enjoy thinking about new ideas and concepts.",
+    "text": "I like thinking about new ideas and deep topics.",
     "trait": "O",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q2",
-    "text": "I like visiting art galleries or museums.",
+    "text": "I like looking at art, visiting museums, or listening to music.",
     "trait": "O",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q3",
-    "text": "I prefer following a familiar routine rather than trying new things.",
+    "text": "I prefer to do the same routine every day instead of trying new things.",
     "trait": "O",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q4",
-    "text": "I have a vivid imagination.",
+    "text": "I can easily imagine clear stories and pictures in my mind.",
     "trait": "O",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q5",
-    "text": "I am not interested in abstract or philosophical discussions.",
+    "text": "I lose interest when people talk about complex theories that are not practical.",
     "trait": "O",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q6",
-    "text": "I enjoy exploring creative ways to solve problems.",
+    "text": "I enjoy finding creative and unusual ways to fix problems.",
     "trait": "O",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q7",
-    "text": "I prefer practical facts over theoretical ideas.",
+    "text": "I care more about real facts than ideas and theories.",
     "trait": "O",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q8",
-    "text": "I enjoy learning about different cultures and perspectives.",
+    "text": "I want to learn about people from different countries and cultures.",
     "trait": "O",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q9",
-    "text": "I rarely spend time daydreaming or reflecting on life.",
+    "text": "I focus on real life rather than spending time daydreaming.",
     "trait": "O",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q10",
-    "text": "I appreciate beauty in art, music, or nature.",
+    "text": "I easily notice and enjoy beauty in nature, art, or clever designs.",
     "trait": "O",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q11",
-    "text": "I keep my workspace neat and organized.",
+    "text": "I keep my room, desk, and digital files clean and organized.",
     "trait": "C",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q12",
-    "text": "I often make decisions on impulse without planning ahead.",
+    "text": "I often make choices quickly without making a plan first.",
     "trait": "C",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q13",
-    "text": "I pay attention to small details in my work.",
+    "text": "I notice small mistakes in my work that other people miss.",
     "trait": "C",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q14",
-    "text": "I find it difficult to stick to a schedule.",
+    "text": "It is hard for me to follow a strict timetable or schedule.",
     "trait": "C",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q15",
-    "text": "I always finish the tasks that I start.",
+    "text": "I try my best to finish a project completely once I start it.",
     "trait": "C",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q16",
-    "text": "I sometimes procrastinate or delay doing important work.",
+    "text": "I regularly delay starting my work, even when it is important.",
     "trait": "C",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q17",
-    "text": "I set clear goals for myself and work hard to achieve them.",
+    "text": "I set clear goals for myself and work hard to reach them.",
     "trait": "C",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q18",
-    "text": "I am often careless and make mistakes.",
+    "text": "I work too fast sometimes, which causes me to make mistakes.",
     "trait": "C",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q19",
-    "text": "I show up on time for appointments and meetings.",
+    "text": "I always arrive on time for meetings and plans with friends.",
     "trait": "C",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q20",
-    "text": "I like to think carefully before I speak or act.",
+    "text": "I think carefully about what will happen before I speak or act.",
     "trait": "C",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q21",
-    "text": "I feel energized after spending time with a group of people.",
+    "text": "I feel full of energy after spending time with a big group of people.",
     "trait": "E",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q22",
-    "text": "I prefer to spend my free time alone or in quiet settings.",
+    "text": "I prefer to spend my free time alone in a quiet place.",
     "trait": "E",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q23",
-    "text": "I find it easy to start conversations with strangers.",
+    "text": "I find it easy to start talking to people I do not know.",
     "trait": "E",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q24",
-    "text": "I tend to keep my thoughts and feelings to myself.",
+    "text": "I naturally keep my thoughts and feelings to myself.",
     "trait": "E",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q25",
-    "text": "I love being the center of attention in a social gathering.",
+    "text": "I enjoy being the person everyone looks at in a social group.",
     "trait": "E",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q26",
-    "text": "I am quiet and reserved around people I do not know well.",
+    "text": "I am quiet and careful around people I just met.",
     "trait": "E",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q27",
-    "text": "I actively seek out social events and parties.",
+    "text": "I actively look for parties, events, or social gatherings to attend.",
     "trait": "E",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q28",
-    "text": "I find large social gatherings draining.",
+    "text": "Spending a long time in crowded rooms tires me out.",
     "trait": "E",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q29",
-    "text": "I make friends quickly and easily.",
+    "text": "I can make new friends very quickly.",
     "trait": "E",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q30",
-    "text": "I talk a lot when I am with friends.",
+    "text": "I talk a lot when I am with my friends.",
     "trait": "E",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q31",
-    "text": "I make an effort to help others when they are in need.",
+    "text": "I spend time and effort to help others when they are having a hard time.",
     "trait": "A",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q32",
-    "text": "I sometimes insult or speak harshly to other people.",
+    "text": "I use angry or harsh words when someone annoys me.",
     "trait": "A",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q33",
-    "text": "I try to understand and sympathize with others' feelings.",
+    "text": "I easily understand how other people feel and feel sorry for them.",
     "trait": "A",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q34",
-    "text": "I believe that most people have good intentions.",
+    "text": "I usually believe that most people are good and honest.",
     "trait": "A",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q35",
-    "text": "I find it hard to forgive people who have wronged me.",
+    "text": "I stay angry for a long time at people who treat me badly.",
     "trait": "A",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q36",
-    "text": "I am a good listener and show interest in other people's lives.",
+    "text": "People say I am a good listener who truly cares about their lives.",
     "trait": "A",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q37",
-    "text": "I often get into arguments or disputes with others.",
+    "text": "I often find myself arguing or disagreeing with other people.",
     "trait": "A",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q38",
-    "text": "I put other people's needs before my own.",
+    "text": "I often give up what I want just to keep the peace with others.",
     "trait": "A",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q39",
-    "text": "I don't really care about other people's problems.",
+    "text": "It is hard for me to care about problems that do not affect me.",
     "trait": "A",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q40",
-    "text": "I treat everyone I meet with kindness and respect.",
+    "text": "I try to treat every person I meet with kindness and respect.",
     "trait": "A",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q41",
-    "text": "I get stressed or overwhelmed easily.",
+    "text": "I feel completely stressed and panicked when I have too much pressure.",
     "trait": "N",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q42",
-    "text": "I feel calm and relaxed even under pressure.",
+    "text": "I stay calm and think clearly during an emergency or difficult crisis.",
     "trait": "N",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q43",
-    "text": "I worry frequently about things that might go wrong.",
+    "text": "I worry a lot about bad things that might happen in the future.",
     "trait": "N",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q44",
-    "text": "I experience frequent mood swings.",
+    "text": "My mood changes very fast from happy to sad or angry.",
     "trait": "N",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q45",
-    "text": "I rarely feel sad, blue, or depressed.",
+    "text": "I have a stable, happy mood most of the time.",
     "trait": "N",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q46",
-    "text": "I get irritated or frustrated very quickly.",
+    "text": "Small things make me feel frustrated or impatient very quickly.",
     "trait": "N",
     "direction": 1,
     "shortTest": true
   },
   {
     "id": "q47",
-    "text": "I feel comfortable with who I am.",
+    "text": "I am happy with who I am and rarely worry about my flaws.",
     "trait": "N",
     "direction": -1,
     "shortTest": false
   },
   {
     "id": "q48",
-    "text": "I often feel insecure or self-conscious.",
+    "text": "I feel nervous or worry about what other people think of me.",
     "trait": "N",
     "direction": 1,
     "shortTest": false
   },
   {
     "id": "q49",
-    "text": "I find it easy to bounce back after a setback.",
+    "text": "I forget about failures quickly and move forward without worrying.",
     "trait": "N",
     "direction": -1,
     "shortTest": true
   },
   {
     "id": "q50",
-    "text": "I am easily bothered or upset by small things.",
+    "text": "When small plans change unexpectedly, it ruins my whole mood.",
     "trait": "N",
     "direction": 1,
     "shortTest": false
   }
 ]
-
-
 

@@ -50,6 +50,17 @@ const personalityResultSchema = new mongoose.Schema({
   },
 
   personalityType: String, // e.g., "OCEANIC"
+  
+  traitInsights: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
+  },
+  
+  topCombinations: {
+    type: [mongoose.Schema.Types.Mixed],
+    default: []
+  },
+
   version: {
     type: Number,
     default: 1

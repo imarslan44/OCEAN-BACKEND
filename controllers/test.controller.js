@@ -4,6 +4,7 @@ import UserProfile from '../models/profile.schema.js';
 import User from '../models/user.model.js';
 import questions from '../data/questions.json' with { type: 'json' };
 import { calculatePersonality } from '../utils/personalityCalc.js';
+import { calculateV2Insights } from '../utils/insightCalc.js';
 
 /**
  * GET /api/v1/tests/questions
@@ -98,7 +99,7 @@ export const getCompletedTest = async (req, res) => {
       test.testData.forEach(item => {
         answersObj[item.questionId] = item.answer;
       });
-      calculation = calculatePersonality(answersObj);
+      calculation = calculateV2Insights(answersObj);
     }
 
     return res.status(200).json({
@@ -128,9 +129,9 @@ export const submitTest = async (req, res) => {
       answersObj[item.questionId] = item.answer;
     });
 
-    // Run personality calculation
-    const calculation = calculatePersonality(answersObj);
-    const { scores, traitDetails, archetype } = calculation;
+    // Run V2 personality calculation
+    const calculation = calculateV2Insights(answersObj);
+    const { scores, archetype, traitInsights, topCombinations } = calculation;
 
     // Get attempt number
     const completedAttemptsCount = await TestModel.countDocuments({ userId, status: 'completed' });
@@ -181,7 +182,9 @@ export const submitTest = async (req, res) => {
       extraversion: scores.E,
       agreeableness: scores.A,
       neuroticism: scores.N,
-      personalityType: archetype.title
+      personalityType: archetype.title,
+      traitInsights,
+      topCombinations
     });
 
     // Update User Profile
