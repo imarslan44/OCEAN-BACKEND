@@ -1,5 +1,5 @@
 import { calculatePersonality as oldCalculate } from './personalityCalc.js';
-import { getTraitInsights, getCombinationInsights } from '../data/ocean-insights-v3.js';
+import { getTraitInsights, getCombinationInsights } from '../data/INSIGHTS.V2.CLAUDE/insights.v4.engine.js';
 
 /**
  * Wraps the old calculation logic (for scores and fallback archetype)

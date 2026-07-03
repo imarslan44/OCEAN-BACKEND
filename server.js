@@ -7,6 +7,7 @@ import { connectDB } from './config/db.config.js';
 import userRouter from './routes/user.routes.js';
 import resultRouter from './routes/results.routes.js';
 import testRouter from './routes/test.routes.js';
+import inviteRouter from './routes/invite.routes.js';
 
 
 connectDB();
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use("/api/v1/users", userRouter);
 app.use('/api/v1/results', resultRouter);
 app.use('/api/v1/tests', testRouter);
+app.use('/api/v1/invites', inviteRouter);
 
 
 app.get('/', (req, res) => {
