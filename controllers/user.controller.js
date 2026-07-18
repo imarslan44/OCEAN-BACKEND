@@ -122,7 +122,7 @@ export const getUserProfile = async (req, res) => {
 export const updateUserProfile = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { bio, avatar, interests, location, ageRange, goals, isPublic, username, country, onboardingComplete, profileSetupComplete } = req.body;
+    const { bio, avatar, interests, location, ageRange, goals, isPublic, username, country, onboardingComplete, profileSetupComplete, testSkipped } = req.body;
 
     if (username !== undefined) {
       await User.findByIdAndUpdate(userId, { username }, { new: true });
@@ -141,7 +141,8 @@ export const updateUserProfile = async (req, res) => {
         isPublic,
         country,
         onboardingComplete,
-        profileSetupComplete
+        profileSetupComplete,
+        testSkipped
       });
       // Link to User
       const user = await User.findById(userId);
@@ -158,6 +159,7 @@ export const updateUserProfile = async (req, res) => {
       if (country !== undefined) userProfile.country = country;
       if (onboardingComplete !== undefined) userProfile.onboardingComplete = onboardingComplete;
       if (profileSetupComplete !== undefined) userProfile.profileSetupComplete = profileSetupComplete;
+      if (testSkipped !== undefined) userProfile.testSkipped = testSkipped;
       userProfile.updatedAt = Date.now();
       await userProfile.save();
     }

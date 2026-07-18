@@ -192,10 +192,12 @@ export const submitTest = async (req, res) => {
     if (!userProfile) {
       userProfile = await UserProfile.create({
         userId,
-        personalityResult: result._id
+        personalityResult: result._id,
+        testSkipped: false
       });
     } else {
       userProfile.personalityResult = result._id;
+      userProfile.testSkipped = false;
       userProfile.updatedAt = Date.now();
       await userProfile.save();
     }

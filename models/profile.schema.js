@@ -22,6 +22,10 @@ const userProfileSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  testSkipped: {
+    type: Boolean,
+    default: false
+  },
   isPublic: {
     type: Boolean,
     default: true
