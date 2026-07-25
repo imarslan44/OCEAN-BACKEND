@@ -8,6 +8,8 @@ import userRouter from './routes/user.routes.js';
 import resultRouter from './routes/results.routes.js';
 import testRouter from './routes/test.routes.js';
 import inviteRouter from './routes/invite.routes.js';
+import learningProgressRouter from './routes/learningProgress.routes.js';
+import feedbackRouter from './routes/feedback.routes.js';
 
 
 connectDB();
@@ -23,6 +25,8 @@ app.use("/api/v1/users", userRouter);
 app.use('/api/v1/results', resultRouter);
 app.use('/api/v1/tests', testRouter);
 app.use('/api/v1/invites', inviteRouter);
+app.use('/api/v1/learning-progress', learningProgressRouter);
+app.use('/api/v1/feedback', feedbackRouter);
 
 
 app.get('/', (req, res) => {

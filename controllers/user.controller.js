@@ -125,7 +125,7 @@ export const updateUserProfile = async (req, res) => {
     const { bio, avatar, interests, location, ageRange, goals, isPublic, username, country, onboardingComplete, profileSetupComplete, testSkipped } = req.body;
 
     if (username !== undefined) {
-      await User.findByIdAndUpdate(userId, { username }, { new: true });
+      await User.findByIdAndUpdate(userId, { username }, { returnDocument: 'after' });
     }
 
     let userProfile = await UserProfile.findOne({ userId });
