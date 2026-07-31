@@ -119,8 +119,18 @@ export const submitTest = async (req, res) => {
     const userId = req.user._id;
     const { testType, testData, timeSpent } = req.body;
 
-    if (!testData || !Array.isArray(testData)) {
-      return res.status(400).json({ message: 'Invalid test data format' });
+    if (!testData || !Array.isArray(testData) || testData.length === 0) {
+      return res.status(400).json({ message: 'Invalid or empty test data' });
+    }
+
+    // Validate answer items
+    for (const item of testData) {
+      if (!item || typeof item.questionId !== 'string' || typeof item.answer !== 'number') {
+        return res.status(400).json({ message: 'Invalid test item structure' });
+      }
+      if (item.answer < 1 || item.answer > 5) {
+        return res.status(400).json({ message: 'Answer values must be integers between 1 and 5' });
+      }
     }
 
     // Convert testData array into a key-value object for personality calculation
@@ -218,6 +228,6 @@ export const submitTest = async (req, res) => {
     });
   } catch (error) {
     console.error('Error submitting test:', error);
-    return res.status(500).json({ message: 'Internal server error', error: error.message, stack: error.stack });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };

@@ -45,25 +45,28 @@ const normalizeLevelProgress = (levelProgress = {}) => ({
 
 const normalizeProgressPayload = (payload = {}) => {
   const normalized = {
-    currentSkillId: payload.currentSkillId !== undefined ? String(payload.currentSkillId) : undefined,
-    currentLevelId: payload.currentLevelId !== undefined ? String(payload.currentLevelId) : undefined,
+    currentSkillId: payload.currentSkillId !== undefined ? String(payload.currentSkillId).slice(0, 50) : undefined,
+    currentLevelId: payload.currentLevelId !== undefined ? String(payload.currentLevelId).slice(0, 50) : undefined,
     completed: Boolean(payload.completed),
     skills: {},
   };
 
-  Object.entries(payload.skills ?? {}).forEach(([skillId, skillProgress = {}]) => {
-    const normalizedLevels = {};
+  const skillEntries = Object.entries(payload.skills ?? {}).slice(0, 50);
 
-    Object.entries(skillProgress.levels ?? {}).forEach(([levelId, levelProgress]) => {
-      normalizedLevels[String(levelId)] = normalizeLevelProgress(levelProgress);
+  skillEntries.forEach(([skillId, skillProgress = {}]) => {
+    const normalizedLevels = {};
+    const levelEntries = Object.entries(skillProgress.levels ?? {}).slice(0, 50);
+
+    levelEntries.forEach(([levelId, levelProgress]) => {
+      normalizedLevels[String(levelId).slice(0, 50)] = normalizeLevelProgress(levelProgress);
     });
 
-    normalized.skills[String(skillId)] = {
+    normalized.skills[String(skillId).slice(0, 50)] = {
       currentLevelId: skillProgress.currentLevelId !== undefined
-        ? String(skillProgress.currentLevelId)
+        ? String(skillProgress.currentLevelId).slice(0, 50)
         : undefined,
       unlockedLevelId: skillProgress.unlockedLevelId !== undefined
-        ? String(skillProgress.unlockedLevelId)
+        ? String(skillProgress.unlockedLevelId).slice(0, 50)
         : undefined,
       levels: normalizedLevels,
     };

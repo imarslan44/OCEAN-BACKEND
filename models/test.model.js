@@ -47,5 +47,7 @@ const testSchema = new mongoose.Schema({
 
 });
 
+testSchema.index({ userId: 1, status: 1 });
+
 const TestModel = mongoose.model('Test', testSchema);
 export default TestModel;

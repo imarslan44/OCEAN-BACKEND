@@ -2,6 +2,17 @@ import User from "../models/user.model.js";
 import UserProfile from "../models/profile.schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config/env.config.js";
+
+const toSafeUser = (userDoc) => {
+    if (!userDoc) return null;
+    const obj = typeof userDoc.toObject === 'function' ? userDoc.toObject() : { ...userDoc };
+    delete obj.password;
+    if (obj._id && !obj.id) {
+        obj.id = obj._id.toString();
+    }
+    return obj;
+};
 
 export const registerUser = async(req, res)=>{
     const {email, password, username} = req.body
@@ -31,7 +42,7 @@ export const registerUser = async(req, res)=>{
             username: username || ''
         });
        
-        const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {expiresIn: "100h"});
+        const token = jwt.sign({id: newUser._id}, JWT_SECRET, {expiresIn: "100h"});
        
         res.cookie("token", token, {
             httpOnly: true,
@@ -43,7 +54,7 @@ export const registerUser = async(req, res)=>{
         });
     
         return res.status(200).json({message: "User registered successfully",
-            newUser,
+            newUser: toSafeUser(newUser),
             token,
 
         });
@@ -62,7 +73,7 @@ export const loginUser = async(req, res)=>{
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if(!isPasswordValid) return res.status(400).json({message: "Invalid email or password"});
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "100h"});
+        const token = jwt.sign({id: user._id}, JWT_SECRET, {expiresIn: "100h"});
 
         res.cookie("token", token, {
             httpOnly: true,
@@ -73,7 +84,7 @@ export const loginUser = async(req, res)=>{
 
         });
         return res.status(200).json({message: "User logged in successfully",
-            user,
+            user: toSafeUser(user),
             token,
 
         });
@@ -124,8 +135,19 @@ export const updateUserProfile = async (req, res) => {
     const userId = req.user._id;
     const { bio, avatar, interests, location, ageRange, goals, isPublic, username, country, onboardingComplete, profileSetupComplete, testSkipped } = req.body;
 
-    if (username !== undefined) {
+    if (username !== undefined && typeof username === 'string') {
+      if (username.length < 3 || username.length > 20) {
+        return res.status(400).json({ message: "Username must be between 3 and 20 characters long" });
+      }
       await User.findByIdAndUpdate(userId, { username }, { returnDocument: 'after' });
+    }
+
+    if (bio !== undefined && typeof bio === 'string' && bio.length > 500) {
+      return res.status(400).json({ message: "Bio cannot exceed 500 characters" });
+    }
+
+    if (location !== undefined && typeof location === 'string' && location.length > 100) {
+      return res.status(400).json({ message: "Location cannot exceed 100 characters" });
     }
 
     let userProfile = await UserProfile.findOne({ userId });

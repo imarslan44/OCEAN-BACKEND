@@ -33,10 +33,15 @@ export const getInviteStatus = async (req, res) => {
   try {
     const { token } = req.params;
     const invite = await Invite.findOne({ token })
-      .populate('inviterId', 'username email')
-      .populate('inviteeId', 'username email');
+      .populate('inviterId', 'username')
+      .populate('inviteeId', 'username');
 
     if (!invite) return res.status(404).json({ message: 'Invite not found' });
+
+    const isExpired = invite.expiresAt && new Date(invite.expiresAt) < new Date();
+    if (isExpired) {
+      return res.status(410).json({ message: 'Invite link has expired', expired: true, invite });
+    }
 
     res.status(200).json({ invite });
   } catch (error) {
@@ -98,6 +103,11 @@ export const acceptInvite = async (req, res) => {
 
     const invite = await Invite.findOne({ token });
     if (!invite) return res.status(404).json({ message: 'Invite not found' });
+
+    if (invite.expiresAt && new Date(invite.expiresAt) < new Date()) {
+      return res.status(410).json({ message: 'This invite link has expired' });
+    }
+
     if (invite.inviterId.toString() === inviteeId) {
       return res.status(400).json({ message: 'Cannot accept your own invite' });
     }
@@ -128,6 +138,19 @@ export const getComparison = async (req, res) => {
       .populate('inviteeId', 'username');
 
     if (!invite) return res.status(404).json({ message: 'Invite not found' });
+
+    if (invite.expiresAt && new Date(invite.expiresAt) < new Date()) {
+      return res.status(410).json({ message: 'This invite link has expired' });
+    }
+
+    // Security check: verify requesting user is a participant
+    const requesterId = req.user.id || req.user._id?.toString();
+    const inviterIdStr = invite.inviterId?._id?.toString() || invite.inviterId?.toString();
+    const inviteeIdStr = invite.inviteeId?._id?.toString() || invite.inviteeId?.toString();
+
+    if (requesterId !== inviterIdStr && requesterId !== inviteeIdStr) {
+      return res.status(403).json({ message: 'Forbidden: You are not a participant in this comparison' });
+    }
 
     // Ensure both users have a test result
     const inviterResult = await PersonalityResult.findOne({ userId: invite.inviterId._id }).sort({ createdAt: -1 });

@@ -27,5 +27,8 @@ const inviteSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+inviteSchema.index({ inviterId: 1, status: 1 });
+inviteSchema.index({ inviteeId: 1, status: 1 });
+
 const Invite = mongoose.model('Invite', inviteSchema);
 export default Invite;
