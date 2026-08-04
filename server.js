@@ -64,6 +64,7 @@ const ensureRuntimeConfig = (req, res, next) => {
 const ensureDatabase = async (req, res, next) => {
   try {
     await connectDB();
+    console.log('Database connection is healthy. Proceeding with the request.');
     next();
   } catch (error) {
     console.error('Request blocked because MongoDB is unavailable:', error);
@@ -97,10 +98,10 @@ app.use((err, req, res, next) => {
   return res.status(500).json({ message: 'Internal server error' });
 });
 
-if (!process.env.VERCEL) {
+
   app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
   });
-}
+
 
 export default app;
