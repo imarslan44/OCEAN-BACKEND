@@ -98,10 +98,11 @@ app.use((err, req, res, next) => {
   return res.status(500).json({ message: 'Internal server error' });
 });
 
-
+if (process.env.VERCEL !== '1') {
   app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
   });
+}
 
 
 export default app;
