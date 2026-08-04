@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "engines": {
-    "node": ">=20.19.0"
+    "node": "20.x"
   },
   "scripts": {
     "start": "node server.js",
@@ -25,7 +25,7 @@
     "express-rate-limit": "^8.6.1",
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.7.0"
+    "mongoose": "8.24.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
